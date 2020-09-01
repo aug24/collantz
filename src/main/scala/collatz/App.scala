@@ -3,8 +3,11 @@ package collatz
 object App {
    def main(args: Array[String]) {
       val start = args(0)
-      val startInt = Integer.valueOf(start)
-      val startBinary = Binary(startInt)
+      val startBinary = try {
+         Binary(Integer.valueOf(start))
+      } catch {
+         case e:NumberFormatException => Binary(start)
+      }
       val next = startBinary.reduce
    }
 }

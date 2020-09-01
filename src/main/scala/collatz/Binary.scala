@@ -1,6 +1,9 @@
 package collatz
 
 object Binary {
+  def apply(s: String): Binary = {
+     Binary(s.getBytes.map(b => b == 'x').toList)
+  }
   def apply(i: Int, p: Int = 1): Binary = {
      if (i>=p) {
        apply(i, 2*p)
