@@ -31,12 +31,23 @@ object Binary {
 case class Binary(val list: List[Boolean]) {
   def reduce(): Binary = {
     this.prettyPrint()
-    val one = list :+ false
-    val doublePlusOne  = true :: list
+    val trimmedList = if (!list(0)) {
+       val x = Binary.trim(list, false)
+       Binary(x).prettyPrint()
+       x
+    } else {
+       list
+    }
+    val one = trimmedList :+ false
+    val doublePlusOne  = true :: trimmedList
     val triplePlusOne = one.zip(doublePlusOne)
     val newList = Binary.trim(sortOfFold(triplePlusOne, false), false)
     newList match {
-       case head :: Nil => Binary(newList)
+       case head :: Nil => {
+          val x = Binary(newList)
+          x.prettyPrint()
+          x
+       }
        case _ =>  Binary(newList).reduce
     }
   }
